@@ -1,0 +1,104 @@
+<wsdl:definitions targetNamespace="http://www.BuscaRuc.org/BuscaRuc/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:impl="http://www.BuscaRuc.org/BuscaRuc/">
+
+    <wsdl:types>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="http://www.BuscaRuc.org/BuscaRuc/">
+            <xsd:element name="BuscaRucRequest" type="xsd:string"/>
+            <xsd:complexType name="InfoRuc">
+                <xsd:sequence>
+                    <xsd:element name="cod_dep" type="xsd:string"/>
+                    <xsd:element name="cod_dist" type="xsd:string"/>
+                    <xsd:element name="cod_prov" type="xsd:string"/>
+                    <xsd:element name="ddp_ciiu" type="xsd:string"/>
+                    <xsd:element name="ddp_doble" type="xsd:string"/>
+                    <xsd:element name="ddp_estado" type="xsd:string"/>
+                    <xsd:element name="ddp_fecact" type="xsd:string"/>
+                    <xsd:element name="ddp_fecalt" type="xsd:string"/>
+                    <xsd:element name="ddp_fecbaj" type="xsd:string"/>
+                    <xsd:element name="ddp_flag22" type="xsd:string"/>
+                    <xsd:element name="ddp_identi" type="xsd:string"/>
+                    <xsd:element name="ddp_inter1" type="xsd:string"/>
+                    <xsd:element name="ddp_lllttt" type="xsd:string"/>
+                    <xsd:element name="ddp_mclase" type="xsd:string"/>
+                    <xsd:element name="ddp_nombre" type="xsd:string"/>
+                    <xsd:element name="ddp_nomvia" type="xsd:string"/>
+                    <xsd:element name="ddp_nomzon" type="xsd:string"/>
+                    <xsd:element name="ddp_numer1" type="xsd:string"/>
+                    <xsd:element name="ddp_numreg" type="xsd:string"/>
+                    <xsd:element name="ddp_numruc" type="xsd:string"/>
+                    <xsd:element name="ddp_reacti" type="xsd:string"/>
+                    <xsd:element name="ddp_refer1" type="xsd:string"/>
+                    <xsd:element name="ddp_secuen" type="xsd:string"/>
+                    <xsd:element name="ddp_tamano" type="xsd:string"/>
+                    <xsd:element name="ddp_tipvia" type="xsd:string"/>
+                    <xsd:element name="ddp_tipzon" type="xsd:string"/>
+                    <xsd:element name="ddp_tpoemp" type="xsd:string"/>
+                    <xsd:element name="ddp_ubigeo" type="xsd:string"/>
+                    <xsd:element name="ddp_userna" type="xsd:string"/>
+                    <xsd:element name="desc_ciiu" type="xsd:string"/>
+                    <xsd:element name="desc_dep" type="xsd:string"/>
+                    <xsd:element name="desc_dist" type="xsd:string"/>
+                    <xsd:element name="desc_estado" type="xsd:string"/>
+                    <xsd:element name="desc_flag22" type="xsd:string"/>
+                    <xsd:element name="desc_identi" type="xsd:string"/>
+                    <xsd:element name="desc_numreg" type="xsd:string"/>
+                    <xsd:element name="desc_prov" type="xsd:string"/>
+                    <xsd:element name="desc_tamano" type="xsd:string"/>
+                    <xsd:element name="desc_tipvia" type="xsd:string"/>
+                    <xsd:element name="desc_tipzon" type="xsd:string"/>
+                    <xsd:element name="desc_tpoemp" type="xsd:string"/>
+                    <xsd:element name="esActivo" type="xsd:string"/>
+                    <xsd:element name="esHabido" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfInfoRuc">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="item" type="impl:InfoRuc"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="BuscaRucResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="RucEncontrados" nillable="true" type="impl:ArrayOfInfoRuc"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="BuscaRucRequest">
+        <wsdl:part element="impl:BuscaRucRequest" name="BuscaRucRequest"/>
+    </wsdl:message>
+    <wsdl:message name="BuscaRucResponse">
+        <wsdl:part element="impl:BuscaRucResponse" name="BuscaRucResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="BuscaRuc">
+        <wsdl:operation name="BuscaRuc">
+            <wsdl:input message="impl:BuscaRucRequest"/>
+            <wsdl:output message="impl:BuscaRucResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="BuscaRucSOAPSoapBinding" type="impl:BuscaRuc">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="BuscaRuc">
+            <soap:operation soapAction="http://www.BuscaRuc.org/BuscaRuc/BuscaRuc"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="BuscaRuc">
+        <wsdl:port binding="impl:BuscaRucSOAPSoapBinding" name="BuscaRucSOAP">
+            <soap:address location="http://192.168.1.180:8080/BuscaRuc/services/BuscaRucSOAP"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

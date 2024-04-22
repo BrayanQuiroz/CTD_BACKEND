@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: persistence
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ctdsys
+    username: jazer
+    password: lordthed2517
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database: postgresql
+    show-sql: true
