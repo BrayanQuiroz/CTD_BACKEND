@@ -30,14 +30,16 @@ public class PersonaJuridica {
     private Servicio servicio;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "i_codeslabon")
-    private Eslabon eslabon;
+    @JoinColumn(name = "i_codsector")
+    private Sector sector;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "i_codsubsector")
+    private Sector subSector;
 
     @Column(name = "v_razonsocial", nullable = false, length = 80)
     private String razonSocial;
 
-    @Column(name = "v_ciuu", nullable = false, length = 50)
-    private String ciuu;
 
     @Column(name = "i_activo", nullable = false)
     private Integer activo;

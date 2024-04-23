@@ -23,20 +23,8 @@ public class TipoUsuario {
     )
     private Integer id;
 
-    @Column(name = "v_tipousu", nullable = false, length = 25)
-    private String tipoUsuario;
-
-    @Column(name = "s_permdb", nullable = false)
-    private Short permisoDB;
-
-    @Column(name = "s_permval", nullable = false)
-    private Short permisoValidacion;
-
-    @Column(name = "s_permreg", nullable = false)
-    private Short permisoRegistro;
-
-    @Column(name = "s_permcon", nullable = false)
-    private Short permisoConsulta;
+    @Column(name = "v_destipousu", nullable = false, length = 25)
+    private String desTipoUsu;
 
     @Column(name = "s_flagestado", nullable = false)
     private Short flagEstado;

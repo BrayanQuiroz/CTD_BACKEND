@@ -3,8 +3,8 @@ spring:
     name: persistence
   datasource:
     url: jdbc:postgresql://localhost:5432/ctdsys
-    username: jazer
-    password: lordthed2517
+    username: ctdsys_user
+    password: CTDSYS
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

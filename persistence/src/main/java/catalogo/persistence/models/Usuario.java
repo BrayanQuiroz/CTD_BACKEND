@@ -26,7 +26,7 @@ public class Usuario {
     private Integer codUsuario;
 
     @Column(name = "b_ruc", nullable = false)
-    private int ruc;
+    private Long ruc;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "i_codtipousu")

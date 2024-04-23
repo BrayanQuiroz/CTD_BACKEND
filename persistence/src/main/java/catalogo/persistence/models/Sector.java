@@ -5,23 +5,23 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "tb_eslabon", schema = "ctdsys_sch")
-public class Eslabon {
+@Table(name = "tb_sector", schema = "ctdsys_sch")
+public class Sector {
 
     @Id
-    @Column(name = "i_codeslabon")
+    @Column(name = "i_codsector")
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "tb_eslabon_i_codeslabon_seq"
+            generator = "tb_sector_i_codsector_seq"
     )
     @SequenceGenerator(
-            name = "tb_eslabon_i_codeslabon_seq",
-            sequenceName = "tb_eslabon_i_codeslabon_seq",
+            name = "tb_sector_i_codsector_seq",
+            sequenceName = "tb_sector_i_codsector_seq",
             allocationSize = 1
     )
     private Integer id;
 
-    @Column(name = "v_deseslabon", nullable = false, length = 50)
+    @Column(name = "v_dessector", nullable = false, length = 50)
     private String descripcion;
 
     @Column(name = "s_flagestado", nullable = false)
