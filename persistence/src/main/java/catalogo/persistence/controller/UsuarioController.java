@@ -1,8 +1,11 @@
 package catalogo.persistence.controller;
 
+import catalogo.persistence.models.PersonaJuridica;
 import catalogo.persistence.models.Usuario;
+import catalogo.persistence.services.PersonaJuridicaService;
 import catalogo.persistence.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +19,8 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private PersonaJuridicaService personaJuridicaService;
 
 //    @GetMapping("/all")
 //    public ResponseEntity<List<Map<String, Object>>> getAllUsuarios() {
@@ -38,20 +43,36 @@ public class UsuarioController {
 //
 //        return ResponseEntity.ok(usuariosData);
 //    }
-@GetMapping("/{ruc}")
-public ResponseEntity<?> getUsuarioByRuc(@PathVariable Long ruc) {
-    Usuario usuario = usuarioService.getUsuarioByRuc(ruc);
-    if (usuario == null) {
-        return ResponseEntity.notFound().build();  // Return 404 if user is not found
-    }
-    return ResponseEntity.ok(Map.of(
-            "ruc", usuario.getRuc(),
-//                "password", usuario.getPassword(),  // Consider not exposing this unless absolutely necessary
-            "flagEstado", usuario.getFlagEstado(),
-            "tipoUsuario", Map.of(
-                    "descripcion", usuario.getTipoUsuario().getDesTipoUsu()
-                    )
-    ));
+    @GetMapping("/{ruc}")
+    public ResponseEntity<?> getUsuarioByRuc(@PathVariable Long ruc) {
+        Usuario usuario = usuarioService.getUsuarioByRuc(ruc);
+
+        if (usuario == null || usuario.getFlagEstado() != 1) {
+
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "No se encontró el usuario o el usuario no está activo");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
+
+        PersonaJuridica personaJuridica = personaJuridicaService.getPersonaJuridicaByCodUsuario(usuario.getCodUsuario());
+
+        if (personaJuridica == null) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "No se encontró la persona jurídica asociada al usuario");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("codusuario", usuario.getCodUsuario());
+        response.put("ruc", usuario.getRuc());
+        response.put("password", usuario.getPassword());
+        response.put("estado", usuario.getFlagEstado());
+        response.put("flagEstado", usuario.getFlagEstado());
+        response.put("tipoUsuario", usuario.getTipoUsuario().getDesTipoUsu());
+        response.put("razonSocial", personaJuridica.getRazonSocial());
+
+        return ResponseEntity.ok(response);
+
     }
 }
 
