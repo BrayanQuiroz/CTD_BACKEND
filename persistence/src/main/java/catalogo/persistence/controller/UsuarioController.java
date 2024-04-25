@@ -1,9 +1,9 @@
 package catalogo.persistence.controller;
 
-import catalogo.persistence.models.PersonaJuridica;
-import catalogo.persistence.models.Usuario;
-import catalogo.persistence.services.PersonaJuridicaService;
-import catalogo.persistence.services.UsuarioService;
+import catalogo.persistence.models.*;
+import catalogo.persistence.repositories.CadenaProductivaRepository;
+import catalogo.persistence.repositories.SectorRepository;
+import catalogo.persistence.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +21,17 @@ public class UsuarioController {
     private UsuarioService usuarioService;
     @Autowired
     private PersonaJuridicaService personaJuridicaService;
+    @Autowired
+    private CadenaProductivaService cadenaProductivaService;
 
-//    @GetMapping("/all")
+    @Autowired
+    private SectorService sectorService;
+    @Autowired
+    private SubSectorService subSectorService;
+    @Autowired
+    private DepartamentoService departamentoService;
+
+    //    @GetMapping("/all")
 //    public ResponseEntity<List<Map<String, Object>>> getAllUsuarios() {
 //        List<Usuario> usuarios = usuarioService.getUsuarioAll();
 //        if (usuarios.isEmpty()) {
@@ -55,12 +64,10 @@ public class UsuarioController {
         }
 
         PersonaJuridica personaJuridica = personaJuridicaService.getPersonaJuridicaByCodUsuario(usuario.getCodUsuario());
-
-        if (personaJuridica == null) {
-            Map<String, String> error = new HashMap<>();
-            error.put("error", "No se encontró la persona jurídica asociada al usuario");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-        }
+        CadenaProductiva cadenaProductiva = cadenaProductivaService.getCadenaProductivaByCodCadProd(personaJuridica.getCadenaProductiva().getCodcadprod());
+        Sector sector = sectorService.getSectorByCodSector(personaJuridica.getServicio().getId());
+        SubSector subSector = subSectorService.getSubSectorByCodSubSector(personaJuridica.getSubSector().getCodSector());
+        Departamento departamento = departamentoService.getDepartamentoById(personaJuridica.getDepartamento().getCodDep());
 
         Map<String, Object> response = new HashMap<>();
         response.put("codusuario", usuario.getCodUsuario());
@@ -70,6 +77,28 @@ public class UsuarioController {
         response.put("flagEstado", usuario.getFlagEstado());
         response.put("tipoUsuario", usuario.getTipoUsuario().getDesTipoUsu());
         response.put("razonSocial", personaJuridica.getRazonSocial());
+        response.put("nombres", personaJuridica.getNombres());
+        response.put("apellidoPaterno", personaJuridica.getApellidoPaterno());
+        response.put("apellidoMaterno", personaJuridica.getApellidoMaterno());
+        response.put("genero", personaJuridica.getGenero());
+        response.put("fechaNacimiento", personaJuridica.getFechaNacimiento());
+        response.put("tipoProveedor", personaJuridica.getTipoProveedor());
+        response.put("nivelAcademico", personaJuridica.getNivelAcademico());
+        response.put("carreraProfesional", personaJuridica.getCarreraProfesional());
+        response.put("experienciaLaboral", personaJuridica.getExperienciaLaboral());
+        response.put("certificadoLaboral", personaJuridica.getCertificadoLaboral());
+        response.put("curriculum", personaJuridica.getCurriculum());
+        response.put("update", personaJuridica.getFlagUpdate());
+        response.put("cadenaProductiva", cadenaProductiva.getDescadprod());
+        response.put("sector", sector.getDescripcion());
+        response.put("subSector", subSector.getDescripcion());
+        response.put("direccion", personaJuridica.getDireccion());
+        response.put("departamento", personaJuridica.getDepartamentos());
+        response.put("provincia", personaJuridica.getProvincia());
+        response.put("distrito", personaJuridica.getDistrito());
+        response.put("departamentos", personaJuridica.getDistrito());
+        response.put("departamentos", departamento.getDescripcion());
+        response.put("provincia", personaJuridica.getProvincia());
 
         return ResponseEntity.ok(response);
 

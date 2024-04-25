@@ -104,6 +104,9 @@ public class PersonaJuridica {
     @Column(name = "s_flagestado", nullable = false)
     private Short flagEstado;
 
+    @Column(name = "s_flagupdate", nullable = false)
+    private Short flagUpdate;
+
     @Column(name = "v_usureg", length = 20)
     private String usureg;
 

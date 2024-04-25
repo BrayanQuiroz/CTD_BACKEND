@@ -7,23 +7,23 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table(name = "tb_servicio", schema = "ctdsys_sch")
-public class Servicio {
+@Table(name = "tb_subsector", schema = "ctdsys_sch")
+public class SubSector {
 
     @Id
-    @Column(name = "i_codserv")
+    @Column(name = "i_codsubsector")
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "tb_servicio_i_codserv_seq"
+            generator = "tb_subsector_i_codsubsector_seq"
     )
     @SequenceGenerator(
-            name = "tb_servicio_i_codserv_seq",
-            sequenceName = "tb_servicio_i_codserv_seq",
+            name = "tb_subsector_i_codsubsector_seq",
+            sequenceName = "tb_subsector_i_codsubsector_seq",
             allocationSize = 1
     )
-    private Integer id;
+    private Integer codSubSector;
 
-    @Column(name = "v_desserv", nullable = false, length = 50)
+    @Column(name = "v_dessubsector", nullable = false, length = 50)
     private String descripcion;
 
     @Column(name = "s_flagestado", nullable = false)

@@ -1,11 +1,13 @@
 package catalogo.persistence.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
 @Entity
+@Data
 @NoArgsConstructor
 @Table(name ="tb_cadenaproductiva", schema = "ctdsys_sch")
 public class CadenaProductiva {

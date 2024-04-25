@@ -1,9 +1,11 @@
 package catalogo.persistence.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.sql.Timestamp;
 
+@Data
 @Entity
 @Table(name = "tb_departamento", schema = "ctdsys_sch")
 public class Departamento {
@@ -19,7 +21,7 @@ public class Departamento {
             sequenceName = "tb_departamento_i_coddep_seq",
             allocationSize = 1
     )
-    private Integer id;
+    private Integer codDep;
 
     @Column(name = "v_desdep", nullable = false, length = 50)
     private String descripcion;
