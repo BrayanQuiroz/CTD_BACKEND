@@ -99,6 +99,7 @@ public class UsuarioController {
         response.put("departamentos", personaJuridica.getDistrito());
         response.put("departamentos", departamento.getDescripcion());
         response.put("provincia", personaJuridica.getProvincia());
+        response.put("web", personaJuridica.getWebsite());
 
         return ResponseEntity.ok(response);
 
