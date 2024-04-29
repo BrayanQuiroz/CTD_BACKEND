@@ -91,6 +91,4 @@ public class UsuarioDTO {
 
     @JsonProperty("tipoUsuario")
     private String tipoUsuario;
-
-
 }

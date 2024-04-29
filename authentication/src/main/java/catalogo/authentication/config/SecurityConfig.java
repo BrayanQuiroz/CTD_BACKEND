@@ -34,10 +34,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-
                 .addFilter(new JWTAuthenticationFilter(authenticationManager))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable);
+
 
         return http.build();
     }
